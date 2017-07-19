@@ -1,0 +1,11 @@
+/*
+  Localizable.strings
+  SurveyApp
+
+  Created by Emils on 13.07.17.
+  Copyright © 2017. g. EmailsGmails. All rights reserved.
+*/
+
+"Question1" = "Vai Jūs esiet profesionālais klients?";
+"Question1Answer1" = "Nē";
+"Question1Answer2" = "Jā";

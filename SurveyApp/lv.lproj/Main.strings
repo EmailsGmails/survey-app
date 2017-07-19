@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "No"; ObjectID = "7IG-17-ysq"; */
+"7IG-17-ysq.text" = "No";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "9we-Lr-g37"; */
+"9we-Lr-g37.normalTitle" = "Next";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Cgy-U2-iYu"; */
+"Cgy-U2-iYu.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Yes"; ObjectID = "HEc-0u-yPC"; */
+"HEc-0u-yPC.text" = "Yes";
+
+/* Class = "UINavigationItem"; title = "Financial Instrument Survey"; ObjectID = "I4c-Zf-yYy"; */
+"I4c-Zf-yYy.title" = "Financial Instrument Survey";
+
+/* Class = "UIButton"; normalTitle = "Fill in survey"; ObjectID = "MgG-al-1um"; */
+"MgG-al-1um.normalTitle" = "Fill in survey";
+
+/* Class = "UITableViewSection"; headerTitle = "Are you a professional client?"; ObjectID = "Rbf-fQ-Uqt"; */
+"Rbf-fQ-Uqt.headerTitle" = "Are you a professional client?";
+
+/* Class = "UILabel"; text = "Yes"; ObjectID = "TaP-rH-xhP"; */
+"TaP-rH-xhP.text" = "Yes";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "YKg-tN-Q8m"; */
+"YKg-tN-Q8m.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "No"; ObjectID = "YgX-Vb-4MN"; */
+"YgX-Vb-4MN.text" = "No";
+
+/* Class = "UILabel"; text = "Client's survey for financial instrument market"; ObjectID = "lNq-oT-JY8"; */
+"lNq-oT-JY8.text" = "Client's survey for financial instrument market";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "pS6-H8-icj"; */
+"pS6-H8-icj.normalTitle" = "Next";
+
+/* Class = "UITableViewSection"; headerTitle = "Are you a professional client?"; ObjectID = "tVY-7s-Dmo"; */
+"tVY-7s-Dmo.headerTitle" = "Are you a professional client?";
