@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SurveyProgress.h"
 
 @interface ClientDescriptionTableViewController : UITableViewController
+
+@property (nonatomic, strong) SurveyProgress *survey;
 
 @end

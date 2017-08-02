@@ -1,11 +1,43 @@
-/* 
-  Localizable.strings
-  SurveyApp
 
-  Created by Emils on 13.07.17.
-  Copyright © 2017. g. EmailsGmails. All rights reserved.
-*/
+"Title" = "Financial Instrument Survey";
+"SurveyDescription" = "Client's survey for financial instrument market";
+"StartBtnText" = "Fill in survey";
+"Next" = "Next";
+"Cancel" = "Cancel";
+"Verification" = "Verification";
+"Finish" = "Finish";
 
-"Question1" = "Are you a professional client?";
-"Question1Answer1" = "No";
-"Question1Answer2" = "Yes";
+"ProfessionalClientStatusQuestion" = "Are you a professional client?";
+"ClientDescriptionQuestion" = "Describe yourself";
+"OperationPurposeQuestion" = "Operation purpose";
+"FinancialActivityQuestion" = "Activity on financial market";
+"PortfolioCostQuestion" = "Your portfolio cost";
+"HasFinancialSectorPositionQuestion" = "Did you have a position in the financial sector?";
+"FinancialSectorPositionQuestion" = "Specify position";
+
+"Yes" = "Yes";
+"No" = "No";
+
+"ProfessionalClientDescriptionLicensed" = "Licensed";
+"ProfessionalClientDescriptionCommercialCommunity" = "Commercial community";
+"ProfessionalClientDescriptionInvestmentCommercialCommunity" = "Investment commercial community";
+"ProfessionalClientDescriptionOther" = "None of the above";
+
+"OperationPurposeCapitalIncrement" = "Capital increment";
+"OperationPurposeStorage" = "Storage";
+"OperationPurposeSpeculativeOperations" = "Speculative operations";
+"OperationPurposeThirdPersonService" = "Third person service";
+"OperationPurposeFinancialMarketOperations" = "Financial market operations";
+"OperationPurposeOther" = "None of the above";
+
+"FinancialActivityHasPreviouslyCommitted" = "Prevously committed";
+"FinancialActivityHasNotPreviouslyCommitted" = "Prevously not committed";
+
+"PortfolioCostLessThan500ThousandEuros" = "Less than 500 000 EUR";
+"PortfolioCostMoreThan500ThousandEuros" = "More than 500 000 EUR";
+
+"FinancialSectorPositionAnalyst" = "Analyst";
+"FinancialSectorPositionBroker" = "Broker";
+"FinancialSectorPositionPortfolioManager" = "Portfolio manager";
+"FinancialSectorPositionInvestmentConsultant" = "Investment consultant";
+"FinancialSectorPositionRegulationExpert" = "Regulation expert";

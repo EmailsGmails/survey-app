@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SurveyProgress.h"
 
 @interface FinancialSectorPositionTableViewController : UITableViewController
+
+@property (nonatomic, strong) SurveyProgress *survey;
 
 @end

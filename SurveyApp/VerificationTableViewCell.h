@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface VerificationTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 

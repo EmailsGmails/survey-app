@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTMaterialTransition-Swift.h"
+#import "SurveyProgress.h"
 
 @interface ProfessionalClientStatusTableViewController : UITableViewController
+
+@property (nonatomic, strong) SurveyProgress *survey;
 
 @end

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SurveyProgress.h"
 @interface IntroViewController : UIInputViewController
 
+@property (nonatomic, strong) SurveyProgress *survey;
 
 @end
 

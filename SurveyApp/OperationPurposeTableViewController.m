@@ -8,92 +8,59 @@
 
 #import "OperationPurposeTableViewController.h"
 #import "FinancialActivityTableViewController.h"
+#import "QuestionTableViewCell.h"
 #import "SurveyProgress.h"
 #import "SurveyContent.h"
 #import "Utils.h"
+#import "SurveyWorkflowManager.h"
 
 @interface OperationPurposeTableViewController ()
 @property (nonatomic,retain) NSIndexPath *checkedIndexPath ;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-@property (weak, nonatomic) NSString *question;
-@property (weak, nonatomic) NSArray *answerChoices;
-@property (strong, nonatomic) NSMutableArray *chosenOptions;
-@property (nonatomic, assign) Boolean isBaseStep;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
+@property (nonatomic, strong) NSArray *answerOptions;
 
 @end
 
 @implementation OperationPurposeTableViewController
-@synthesize checkedIndexPath;
-@synthesize nextButton;
-@synthesize question;
-@synthesize answerChoices;
-@synthesize chosenOptions;
-@synthesize isBaseStep;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.question = [SurveyContent.surveyContent operationPurposeQuestion];
-    self.answerChoices = [SurveyContent.surveyContent operationPurposeAnswerChoices];
-    self.isBaseStep = [Utils determineIfBaseQuestion:question];
-    self.stepLabel.text = [Utils getStepLabelWithCondition:isBaseStep];
-    self.nextButton.enabled = NO;
-    self.nextButton.backgroundColor = [UIColor grayColor];
-    self.chosenOptions = [[NSMutableArray alloc] init];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    self.title = @"Financial Instrument Survey";
-    [self.navigationController setNavigationBarHidden:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController) {
-        if (self.isBaseStep) {
-            [[SurveyProgress.surveyProgress baseQuestions] removeLastObject];
-        }
-        [SurveyProgress.surveyProgress setOperationPurposeQuestion:nil];
-        [SurveyProgress.surveyProgress setOperationPurposeAnswer:nil];
-    }
+    self.title = NSLocalizedString(@"Title", nil);
+    self.answerOptions = [NSArray arrayWithObjects:
+                          NSLocalizedString(@"OperationPurposeCapitalIncrement", nil),
+                          NSLocalizedString(@"OperationPurposeStorage", nil),
+                          NSLocalizedString(@"OperationPurposeSpeculativeOperations", nil),
+                          NSLocalizedString(@"OperationPurposeThirdPersonService", nil),
+                          NSLocalizedString(@"OperationPurposeFinancialMarketOperations", nil),
+                          NSLocalizedString(@"OperationPurposeOther", nil), nil];
+    self.stepLabel.text = [SurveyWorkflowManager getStepCountFromStep:SurveyStep_OperationPurpose fromSurvey:self.survey];
+    [self.nextButton setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
 }
 
 - (IBAction)cancelSurveyButton:(id)sender {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [SurveyProgress cancelSurvey];
 }
 
 - (IBAction)nextButton:(id)sender {
-    [SurveyProgress.surveyProgress setOperationPurposeQuestion:question];
-    [SurveyProgress.surveyProgress setOperationPurposeAnswer:chosenOptions];
-    if (self.isBaseStep) {
-        [[SurveyProgress.surveyProgress baseQuestions] addObject:question];
-    }
-    NSLog(@"Chosen options %@", [chosenOptions valueForKey:@"description"]);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *uvc = (FinancialActivityTableViewController*)[storyboard instantiateViewControllerWithIdentifier:@"FinancialActivity"];
-    [self.navigationController pushViewController:uvc animated:YES];
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSLog(@"Chosen options %@", [self.survey.operationPurpose valueForKey:@"description"]);
+    [self nextStepForSurvey:self.survey currentStep:SurveyStep_OperationPurpose];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return question;
+    return NSLocalizedString(@"OperationPurposeQuestion", nil);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell;
+    static NSString *cellIdentifier = @"QuestionCell";
+    QuestionTableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[QuestionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text = [answerChoices objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
+//    if ([self.survey.operationPurpose objectAtIndex:indexPath.row] isEqual:)
+    cell.questionLbl.text = self.answerOptions[indexPath.row];
+    cell.checkmark.hidden = YES;
     cell.backgroundColor = [UIColor colorWithRed:0/255.0 green:255/255.0 blue:167/255.0 alpha:1.0];
     return cell;
 }
@@ -102,36 +69,34 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.answerChoices count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.answerOptions.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
-    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    if([self.checkedIndexPath isEqual:indexPath])
-    {
-        [chosenOptions removeObjectIdenticalTo:cell.textLabel.text];
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    QuestionTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if([self.checkedIndexPath isEqual:indexPath]) {
+        [self.survey.operationPurpose removeObjectIdenticalTo:@(indexPath.row)];
+        cell.checkmark.hidden = YES;
         self.checkedIndexPath = nil;
-        if (!chosenOptions.count) {
+        if (!self.survey.operationPurpose.count) {
             self.nextButton.enabled = NO;
             self.nextButton.backgroundColor = [UIColor grayColor];
         }
     }
-    else
-    {
-        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            [chosenOptions removeObjectIdenticalTo:cell.textLabel.text];
-            cell.accessoryType = UITableViewCellAccessoryNone;
+    else {
+        if (cell.checkmark.hidden == NO) {
+            [self.survey.operationPurpose removeObjectIdenticalTo:@(indexPath.row)];
+            cell.checkmark.hidden = YES;
             self.checkedIndexPath = nil;
-            if (!chosenOptions.count) {
+            if (!self.survey.operationPurpose.count) {
                 self.nextButton.enabled = NO;
                 self.nextButton.backgroundColor = [UIColor grayColor];
             }
         }
         else {
-            [chosenOptions addObject:cell.textLabel.text];
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [self.survey.operationPurpose addObject:@(indexPath.row)];
+            cell.checkmark.hidden = NO;
             self.checkedIndexPath = indexPath;
             self.nextButton.enabled = YES;
             self.nextButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:64/255.0 blue:100/255.0 alpha:1.0];

@@ -18,19 +18,31 @@
 @synthesize hasFinancialSectorPositionQuestion;
 @synthesize financialSectorPositionQuestion;
 
-@synthesize baseQuestionsArray;
-@synthesize optionalQuestions;
+@synthesize isProfessionalClient;
+@synthesize professionalClientDescriptionLicensed;
+@synthesize professionalClientDescriptionCommercialCommunity;
+@synthesize professionalClientDescriptionInvestmentCommercialCommunity;
+@synthesize professionalClientDescriptionOther;
 
-@synthesize professionalClientStatusAnswerChoices;
-@synthesize clientDescriptionAnswerChoices;
-@synthesize operationPurposeAnswerChoices;
-@synthesize financialActivityAnswerChoices;
-@synthesize portfolioCostAnswerChoices;
-@synthesize financialSectorPositionAnswerChoices;
-@synthesize hasFinancialSectorPositionAnswerChoices;
+@synthesize operationPurposeCapitalIncrement;
+@synthesize operationPurposeStorage;
+@synthesize operationPurposeSpeculativeOperations;
+@synthesize operationPurposeThirdPersonService;
+@synthesize operationPurposeFinancialMarketOperations;
+@synthesize operationPurposeOther;
 
-@synthesize baseAnswerChoices;
-@synthesize optionalAnswerChoices;
+@synthesize isFinancialActivityPreviouslyCommitted;
+
+@synthesize portfolioCostMoreThan500ThousandEuros;
+@synthesize portfolioCostLessThan500ThousandEuros;
+
+@synthesize isInFinancialSector;
+@synthesize financialSectorPositionAnalyst;
+@synthesize financialSectorPositionBroker;
+@synthesize financialSectorPositionPortfolioManager;
+@synthesize financialSectorPositionInvestmentConsultant;
+@synthesize financialSectorPositionRegulationExpert;
+
 
 + (id)surveyContent {
     static SurveyContent *surveyContent = nil;
@@ -43,27 +55,38 @@
 
 - (id)init {
     if (self = [super init]) {
-        professionalClientStatusQuestion = @"Are you a professional client?";
-        clientDescriptionQuestion = @"Describe yourself";
-        operationPurposeQuestion = @"Operation purpose";
-        financialActivityQuestion = @"Activity on financial market";
-        portfolioCostQuestion = @"Your portfolio cost";
-        hasFinancialSectorPositionQuestion = @"Did you have a position in the financial sector?";
-        financialSectorPositionQuestion = @"Specify position";
+        professionalClientStatusQuestion = NSLocalizedString(@"ProfessionalClientStatusQuestion", nil);
+        clientDescriptionQuestion = NSLocalizedString(@"ClientDescriptionQuestion", nil);
+        operationPurposeQuestion = NSLocalizedString(@"OperationPurposeQuestion", nil);
+        financialActivityQuestion = NSLocalizedString(@"FinancialActivityQuestion", nil);
+        portfolioCostQuestion = NSLocalizedString(@"PortfolioCostQuestion", nil);
+        hasFinancialSectorPositionQuestion = NSLocalizedString(@"HasFinancialSectorPositionQuestion", nil);
+        financialSectorPositionQuestion = NSLocalizedString(@"FinancialSectorPositionQuestion", nil);
         
-        baseQuestionsArray = [NSArray arrayWithObjects: professionalClientStatusQuestion, operationPurposeQuestion, financialActivityQuestion, hasFinancialSectorPositionQuestion, nil];
-        optionalQuestions = [NSArray arrayWithObjects: clientDescriptionQuestion, portfolioCostQuestion, financialSectorPositionQuestion, nil];
-        
-        professionalClientStatusAnswerChoices = [NSArray arrayWithObjects: @"No", @"Yes", nil];
-        clientDescriptionAnswerChoices = [NSArray arrayWithObjects: @"Licensed", @"Commercial community", @"Investment commercial community", @"None of the above", nil];
-        operationPurposeAnswerChoices = [NSArray arrayWithObjects: @"Capital increment", @"Storage", @"Speculative operations", @"Third person service", @"Financial market operations", @"Other", nil];
-        financialActivityAnswerChoices = [NSArray arrayWithObjects: @"Previously not committed", @"Previously committed", nil];
-        portfolioCostAnswerChoices = [NSArray arrayWithObjects: @"Less than 500 000 EUR", @"More than 500 000 EUR", nil];
-        hasFinancialSectorPositionAnswerChoices = [NSArray arrayWithObjects: @"No", @"Yes", nil];
-        financialSectorPositionAnswerChoices = [NSArray arrayWithObjects: @"Analyst", @"Broker", @"Portfolio Manager", @"Investment consultant", @"Regulation expert", nil];
+        isProfessionalClient = nil;
 
-        baseAnswerChoices = [NSArray arrayWithObjects:professionalClientStatusAnswerChoices, operationPurposeAnswerChoices, financialActivityAnswerChoices, hasFinancialSectorPositionAnswerChoices, nil];
-        optionalAnswerChoices = [NSArray arrayWithObjects:clientDescriptionAnswerChoices, portfolioCostAnswerChoices, financialSectorPositionAnswerChoices, nil];
+        professionalClientDescriptionLicensed = NSLocalizedString(@"ProfessionalClientDescriptionLicensed", nil);
+        professionalClientDescriptionCommercialCommunity = NSLocalizedString(@"ProfessionalClientDescriptionCommercialCommunity", nil);
+        professionalClientDescriptionInvestmentCommercialCommunity = NSLocalizedString(@"ProfessionalClientDescriptionInvestmentCommercialCommunity", nil);
+        professionalClientDescriptionOther = NSLocalizedString(@"ProfessionalClientDescriptionOther", nil);
+        
+        operationPurposeCapitalIncrement = NSLocalizedString(@"OperationPurposeCapitalIncrement", nil);
+        operationPurposeStorage = NSLocalizedString(@"OperationPurposeStorage", nil);
+        operationPurposeSpeculativeOperations = NSLocalizedString(@"OperationPurposeSpeculativeOperations", nil);
+        operationPurposeThirdPersonService = NSLocalizedString(@"OperationPurposeThirdPersonService", nil);
+        operationPurposeFinancialMarketOperations = NSLocalizedString(@"OperationPurposeFinancialMarketOperations", nil);
+        operationPurposeOther = NSLocalizedString(@"OperationPurposeOther", nil);
+        
+        isFinancialActivityPreviouslyCommitted = nil;
+        
+        portfolioCostMoreThan500ThousandEuros;
+        portfolioCostLessThan500ThousandEuros;
+        isInFinancialSector;
+        financialSectorPositionAnalyst;
+        financialSectorPositionBroker;
+        financialSectorPositionPortfolioManager;
+        financialSectorPositionInvestmentConsultant;
+        financialSectorPositionRegulationExpert;
     }
     return self;
 }

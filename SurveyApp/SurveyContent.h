@@ -18,19 +18,31 @@
 @property (nonatomic, strong) NSString *hasFinancialSectorPositionQuestion;
 @property (nonatomic, strong) NSString *financialSectorPositionQuestion;
 
-@property (nonatomic, strong) NSArray *baseQuestionsArray;
-@property (nonatomic, strong) NSArray *optionalQuestions;
+@property (nonatomic, assign) BOOL isProfessionalClient;
 
-@property (nonatomic, strong) NSArray *professionalClientStatusAnswerChoices;
-@property (nonatomic, strong) NSArray *clientDescriptionAnswerChoices;
-@property (nonatomic, strong) NSArray *operationPurposeAnswerChoices;
-@property (nonatomic, strong) NSArray *financialActivityAnswerChoices;
-@property (nonatomic, strong) NSArray *portfolioCostAnswerChoices;
-@property (nonatomic, strong) NSArray *hasFinancialSectorPositionAnswerChoices;
-@property (nonatomic, strong) NSArray *financialSectorPositionAnswerChoices;
+@property (nonatomic, strong) NSString *professionalClientDescriptionLicensed;
+@property (nonatomic, strong) NSString *professionalClientDescriptionCommercialCommunity;
+@property (nonatomic, strong) NSString *professionalClientDescriptionInvestmentCommercialCommunity;
+@property (nonatomic, strong) NSString *professionalClientDescriptionOther;
 
-@property (nonatomic, strong) NSArray *baseAnswerChoices;
-@property (nonatomic, strong) NSArray *optionalAnswerChoices;
+@property (nonatomic, strong) NSString *operationPurposeCapitalIncrement;
+@property (nonatomic, strong) NSString *operationPurposeStorage;
+@property (nonatomic, strong) NSString *operationPurposeSpeculativeOperations;
+@property (nonatomic, strong) NSString *operationPurposeThirdPersonService;
+@property (nonatomic, strong) NSString *operationPurposeFinancialMarketOperations;
+@property (nonatomic, strong) NSString *operationPurposeOther;
+
+@property (nonatomic, assign) BOOL isFinancialActivityPreviouslyCommitted;
+
+@property (nonatomic, assign) NSString *portfolioCostMoreThan500ThousandEuros;
+@property (nonatomic, assign) NSString *portfolioCostLessThan500ThousandEuros;
+
+@property (nonatomic, assign) Boolean *isInFinancialSector;
+@property (nonatomic, strong) NSString *financialSectorPositionAnalyst;
+@property (nonatomic, strong) NSString *financialSectorPositionBroker;
+@property (nonatomic, strong) NSString *financialSectorPositionPortfolioManager;
+@property (nonatomic, strong) NSString *financialSectorPositionInvestmentConsultant;
+@property (nonatomic, strong) NSString *financialSectorPositionRegulationExpert;
 
 + (id)surveyContent;
 

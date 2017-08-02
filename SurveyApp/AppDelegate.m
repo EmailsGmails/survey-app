@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UILabel+Helper.h"
 
 @interface AppDelegate ()
 
@@ -17,13 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    UIViewController *vc1 = [storyboard instantiateViewControllerWithIdentifier:@"ProfessionalClientStatus"];
-//    UIViewController *vc2 = [storyboard instantiateViewControllerWithIdentifier:@"ClientDescription"];
-//    UIViewController *vc3 = [storyboard instantiateViewControllerWithIdentifier:@"OperationPurpose"];
-//    NSArray *controllers = @[vc1, vc2, vc3];
-//    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-//    [navController setViewControllers:controllers];
+    [[UILabel appearance] setSubstituteFontName:@"Helvetica Neue Light"];
     return YES;
 }
 

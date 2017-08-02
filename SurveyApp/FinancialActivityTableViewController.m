@@ -12,131 +12,73 @@
 #import "SurveyProgress.h"
 #import "SurveyContent.h"
 #import "Utils.h"
+#import "SurveyWorkflowManager.h"
 
 @interface FinancialActivityTableViewController ()
 
 @property (nonatomic,retain) NSIndexPath *checkedIndexPath;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-@property (weak, nonatomic) NSString *question;
-@property (weak, nonatomic) NSArray *answerChoices;
-@property (nonatomic, strong) NSString *chosenOption;
-@property (nonatomic, assign) Boolean isBaseStep;
 @property (weak, nonatomic) IBOutlet UILabel *stepLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noLbl;
+@property (weak, nonatomic) IBOutlet UIImageView *noCheckmark;
+@property (weak, nonatomic) IBOutlet UILabel *yesLbl;
+@property (weak, nonatomic) IBOutlet UIImageView *yesCheckmark;
 
 @end
 
 @implementation FinancialActivityTableViewController
 
-@synthesize checkedIndexPath;
-@synthesize nextButton;
-@synthesize question;
-@synthesize answerChoices;
-@synthesize chosenOption;
-@synthesize isBaseStep;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.question = [SurveyContent.surveyContent financialActivityQuestion];
-    self.answerChoices = [SurveyContent.surveyContent financialActivityAnswerChoices];
-    self.isBaseStep = [Utils determineIfBaseQuestion:question];
-    self.stepLabel.text = [Utils getStepLabelWithCondition:isBaseStep];
-    self.tableView.allowsMultipleSelection = NO;
-    self.nextButton.enabled = NO;
-    self.nextButton.backgroundColor = [UIColor grayColor];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    self.title = @"Financial Instrument Survey";
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController) {
-        if (self.isBaseStep) {
-            [[SurveyProgress.surveyProgress baseQuestions] removeLastObject];
-        }
-        [SurveyProgress.surveyProgress setFinancialActivityQuestion:nil];
-        [SurveyProgress.surveyProgress setFinancialActivityAnswer:nil];
-    }
+    self.title = NSLocalizedString(@"Title", nil);
+    self.noLbl.text = NSLocalizedString(@"FinancialActivityHasNotPreviouslyCommitted", nil);
+    self.yesLbl.text = NSLocalizedString(@"FinancialActivityHasPreviouslyCommitted", nil);
+    self.stepLabel.text = [SurveyWorkflowManager getStepCountFromStep:SurveyStep_FinancialActivity fromSurvey:self.survey];
+    [self.nextButton setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
+    [self updateCheckmarks];
 }
 
 - (IBAction)cancelSurveyButton:(id)sender {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [SurveyProgress cancelSurvey];
 }
 
 - (IBAction)nextButton:(id)sender {
-    [SurveyProgress.surveyProgress setFinancialActivityQuestion:question];
-    [SurveyProgress.surveyProgress setFinancialActivityAnswer:chosenOption];
-    if (self.isBaseStep) {
-        [[SurveyProgress.surveyProgress baseQuestions] addObject:question];
-    }
-    NSLog(@"Selected choice: %@", chosenOption);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if (chosenOption == [answerChoices objectAtIndex:0]) {
-        UIViewController *uvc = (FinancialSectorPositionTableViewController*)[storyboard instantiateViewControllerWithIdentifier:@"FinancialSectorPosition"];
-        [self.navigationController pushViewController:uvc animated:YES];
-    }
-    else {
-        UIViewController *uvc = (PortfolioCostTableViewController*)[storyboard instantiateViewControllerWithIdentifier:@"PortfolioCost"];
-        [self.navigationController pushViewController:uvc animated:YES];
-    }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSLog(@"Selected choice: %@", [self.survey.hasFinancialExperience isEqual:@(YES)] ? @"Yes" : @"No");
+    [self nextStepForSurvey:self.survey currentStep:SurveyStep_FinancialActivity];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return question;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    cell.textLabel.text = [answerChoices objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
-    cell.backgroundColor = [UIColor colorWithRed:0/255.0 green:255/255.0 blue:167/255.0 alpha:1.0];
-    return cell;
+    return NSLocalizedString(@"FinancialActivityQuestion", nil);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.answerChoices count];
+static const int yesCell = 0;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
+    self.survey.hasFinancialExperience = indexPath.row == yesCell ? @(NO) : @(YES);
+    
+    [self updateCheckmarks];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
-    if(self.checkedIndexPath)
+- (void) updateCheckmarks
+{
+    self.yesCheckmark.hidden = ![self.survey.hasFinancialExperience isEqual:@(YES)];
+    self.noCheckmark.hidden = ![self.survey.hasFinancialExperience isEqual:@(NO)];
+    
+    if(!self.yesCheckmark.hidden || !self.noCheckmark.hidden)
     {
-        UITableViewCell* uncheckCell = [tableView
-                                        cellForRowAtIndexPath:self.checkedIndexPath];
-        uncheckCell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    if([self.checkedIndexPath isEqual:indexPath])
-    {
-        self.checkedIndexPath = nil;
-        self.chosenOption = nil;
-        self.nextButton.enabled = NO;
-        self.nextButton.backgroundColor = [UIColor grayColor];
-    }
-    else
-    {
-        UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        self.checkedIndexPath = indexPath;
-        self.chosenOption = cell.textLabel.text;
         self.nextButton.enabled = YES;
         self.nextButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:64/255.0 blue:100/255.0 alpha:1.0];
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    else
+    {
+        self.nextButton.enabled = NO;
+        self.nextButton.backgroundColor = [UIColor grayColor];
+    }
 }
 
 /*
